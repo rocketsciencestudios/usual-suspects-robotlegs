@@ -16,8 +16,6 @@ package rocketsciencestudios.model.environment {
 	 */
 	public class EnvironmentModel extends Actor {
 		public static const PRELOAD_NAME : String = "ENVIRONMENT";
-//		[Inject]
-//		public var contextView : DisplayObjectContainer;
 		private static const LOCALHOST : String = "localhost";
 		// 2
 		private var _timeline : DisplayObject;
@@ -32,10 +30,6 @@ package rocketsciencestudios.model.environment {
 			_loaderURL = _timeline.loaderInfo.loaderURL;
 			parseXML(LoaderMax.getContent(PRELOAD_NAME));
 		}
-
-//		[PostConstruct]
-//		public function initialize() : void {
-//		}
 
 		public function get domain() : String {
 			return _domain;
