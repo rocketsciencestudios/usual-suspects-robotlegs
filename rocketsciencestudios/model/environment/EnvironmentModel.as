@@ -16,8 +16,6 @@ package rocketsciencestudios.model.environment {
 	 */
 	public class EnvironmentModel extends Actor {
 		public static const PRELOAD_NAME : String = "ENVIRONMENT";
-		[Inject]
-		public var contextView : DisplayObjectContainer;
 		private static const LOCALHOST : String = "localhost";
 		// 2
 		private var _timeline : DisplayObject;
@@ -26,13 +24,10 @@ package rocketsciencestudios.model.environment {
 		private var _versionHash : String;
 		private var _domain : String;
 
-		public function EnvironmentModel() {
+		public function EnvironmentModel(timeline : DisplayObjectContainer) {
+			_timeline = timeline;
 			_environment = new Dictionary();
-		}
-
-		[PostConstruct]
-		public function initialize() : void {
-			_loaderURL = contextView.loaderInfo.loaderURL;
+			_loaderURL = _timeline.loaderInfo.loaderURL;
 			parseXML(LoaderMax.getContent(PRELOAD_NAME));
 		}
 
@@ -88,6 +83,7 @@ package rocketsciencestudios.model.environment {
 		}
 
 		private function parseXML(xml : XML) : void {
+			debug("_environment: " + _environment);
 			var environment : XML = xml;
 			var filteredValues : XML = <values />;
 
@@ -111,13 +107,16 @@ package rocketsciencestudios.model.environment {
 				value.parseXML(valueNode);
 				_environment[value.name] = value;
 			}
+			debug("_environment: " + _environment);
 		}
 
 		private function getGroupedValues(inGroups : XMLList, inDomain : String) : XMLList {
+			debug("inDomain: " + inDomain);
 			if (!inGroups)
 				return null;
 
 			var groupedValues : XMLList;
+			debug("groupedValues: " + groupedValues);
 			var localhost : XMLList;
 
 			var leni : int = inGroups.length();
@@ -125,6 +124,7 @@ package rocketsciencestudios.model.environment {
 				var group : XML = inGroups[i] as XML;
 				var domains : Array = String(group.@domain).split(",");
 				for each (var domain : String in domains) {
+					debug("domain: " + domain);
 					if (domain == inDomain) {
 						info(RSSVersion.HASH + " Using environment domain [" + domains + "] in " + _loaderURL);
 						groupedValues = group.value;
