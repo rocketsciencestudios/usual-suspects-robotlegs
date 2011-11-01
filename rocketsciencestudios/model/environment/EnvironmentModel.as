@@ -141,7 +141,7 @@ package rocketsciencestudios.model.environment {
 		}
 
 		private function getEnvironmentDomain() : String {
-			if (!new RegExp("^http:/{2}", "i").test(_loaderURL))
+			if (!new RegExp("^https{0,1}:/{2}", "i").test(_loaderURL))
 				return LOCALHOST;
 
 			var domain : RegExp = new RegExp("http:\/\/(?:www\.)?([^\/]+)", "i");
