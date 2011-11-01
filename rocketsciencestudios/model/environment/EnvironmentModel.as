@@ -83,7 +83,6 @@ package rocketsciencestudios.model.environment {
 		}
 
 		private function parseXML(xml : XML) : void {
-			debug("_environment: " + _environment);
 			var environment : XML = xml;
 			var filteredValues : XML = <values />;
 
@@ -107,7 +106,6 @@ package rocketsciencestudios.model.environment {
 				value.parseXML(valueNode);
 				_environment[value.name] = value;
 			}
-			debug("_environment: " + _environment);
 		}
 
 		private function getGroupedValues(inGroups : XMLList, inDomain : String) : XMLList {
@@ -124,7 +122,6 @@ package rocketsciencestudios.model.environment {
 				var group : XML = inGroups[i] as XML;
 				var domains : Array = String(group.@domain).split(",");
 				for each (var domain : String in domains) {
-					debug("domain: " + domain);
 					if (domain == inDomain) {
 						info(RSSVersion.HASH + " Using environment domain [" + domains + "] in " + _loaderURL);
 						groupedValues = group.value;
